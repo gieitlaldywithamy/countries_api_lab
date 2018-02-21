@@ -36,6 +36,7 @@ const storeCurrentCountry = function(country){
 }
 
 const populateCountryDetails = function(currentCountry){
+  console.log(currentCountry);
   const ul = document.querySelector('#country-details')
   ul.innerText = " "
   const liName = document.createElement('li');
@@ -44,10 +45,23 @@ const populateCountryDetails = function(currentCountry){
   liPopulation.innerText = "Population: " + currentCountry.population;
   const liCapitalCity = document.createElement('li');
   liCapitalCity.innerText = "Capital City: " + currentCountry.capital;
+  const liNeighbours = document.createElement('li');
+
+  const toFind = currentCountry.borders;
+  console.log(toFind);
+  const neighbours = [];
   ul.appendChild(liName);
   ul.appendChild(liPopulation);
   ul.appendChild(liCapitalCity);
-console.log(currentCountry);
+  ul.appendChild(liNeighbours);
+  //alpha3code
+  for (country of countriesArray) {
+    for (border of toFind){
+      if (border === country.alpha3Code)
+        neighbours.push(country.name);
+    }
+  }
+  liNeighbours.innerText = "Shares borders with: " + neighbours;
   const mapDiv = document.getElementById('map');
   const coords = {lat: currentCountry.latlng[0], lng: currentCountry.latlng[1]};
   const countryMap = new google.maps.Map(mapDiv, {
