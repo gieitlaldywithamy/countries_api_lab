@@ -6,25 +6,33 @@ const app = function(){
   // const buttonHandler = function(){
     // makeRequest(url, requestComplete);
   // }
+
+
+  const lastCountry = JSON.parse(localStorage.getItem('lastCountry'));
+  populateCountryDetails(lastCountry);
+
   const countries = makeRequest(url, requestComplete);
   console.log(countries);
 
   const changeHandler = function(){
-    console.log("You're doing great!");
-    const details = document.querySelector('#country-details')
-    const ul = document.createElement('ul');
     const currentCountry = countriesArray[this.value];
-    const liName = document.createElement('li');
-    liName.innerText = currentCountry.name;
-    const liPopulation = document.createElement('li');
-    liPopulation.innerText = currentCountry.population;
-    const liCapitalCity = document.createElement('li');
-    liCapitalCity.innerText = currentCountry.capital;
-    ul.appendChild(liName);
-    ul.appendChild(liPopulation);
-    ul.appendChild(liCapitalCity);
-    // ul.innerText = "You're fabulous";
-    details.appendChild(ul);
+    populateCountryDetails(currentCountry);
+    // console.log("You're doing great!");
+    // const details = document.querySelector('#country-details')
+    // const ul = document.createElement('ul');
+    // const liName = document.createElement('li');
+    // liName.innerText = currentCountry.name;
+    // const liPopulation = document.createElement('li');
+    // liPopulation.innerText = currentCountry.population;
+    // const liCapitalCity = document.createElement('li');
+    // liCapitalCity.innerText = currentCountry.capital;
+    // ul.appendChild(liName);
+    // ul.appendChild(liPopulation);
+    // ul.appendChild(liCapitalCity);
+    // // ul.innerText = "You're fabulous";
+    // details.appendChild(ul);
+
+    storeCurrentCountry(currentCountry);
   }
 
   // const countriesButton = document.querySelector('button');
@@ -36,6 +44,24 @@ const app = function(){
   makeRequest(url, requestComplete);
 }
 
+const storeCurrentCountry = function(country){
+  const jsonCountry = JSON.stringify(country);
+  localStorage.setItem('lastCountry', jsonCountry);
+}
+
+const populateCountryDetails = function(currentCountry){
+  const ul = document.querySelector('#country-details')
+  ul.innerText = " "
+  const liName = document.createElement('li');
+  liName.innerText = "Country: " + currentCountry.name;
+  const liPopulation = document.createElement('li');
+  liPopulation.innerText = "Population: " + currentCountry.population;
+  const liCapitalCity = document.createElement('li');
+  liCapitalCity.innerText = "Capital City: " + currentCountry.capital;
+  ul.appendChild(liName);
+  ul.appendChild(liPopulation);
+  ul.appendChild(liCapitalCity);
+}
 
 const makeRequest = function(url, callback){
   const request = new XMLHttpRequest();
