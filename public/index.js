@@ -17,20 +17,6 @@ const app = function(){
   const changeHandler = function(){
     const currentCountry = countriesArray[this.value];
     populateCountryDetails(currentCountry);
-    // console.log("You're doing great!");
-    // const details = document.querySelector('#country-details')
-    // const ul = document.createElement('ul');
-    // const liName = document.createElement('li');
-    // liName.innerText = currentCountry.name;
-    // const liPopulation = document.createElement('li');
-    // liPopulation.innerText = currentCountry.population;
-    // const liCapitalCity = document.createElement('li');
-    // liCapitalCity.innerText = currentCountry.capital;
-    // ul.appendChild(liName);
-    // ul.appendChild(liPopulation);
-    // ul.appendChild(liCapitalCity);
-    // // ul.innerText = "You're fabulous";
-    // details.appendChild(ul);
 
     storeCurrentCountry(currentCountry);
   }
@@ -61,6 +47,14 @@ const populateCountryDetails = function(currentCountry){
   ul.appendChild(liName);
   ul.appendChild(liPopulation);
   ul.appendChild(liCapitalCity);
+console.log(currentCountry);
+  const mapDiv = document.getElementById('map');
+  const coords = {lat: currentCountry.latlng[0], lng: currentCountry.latlng[1]};
+  const countryMap = new google.maps.Map(mapDiv, {
+  center: coords,
+  zoom: 7
+});
+
 }
 
 const makeRequest = function(url, callback){
